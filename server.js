@@ -7,11 +7,10 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-const OPEN_WEATHER_KEY = '4fe24b355df769a67639a42b8aff0485'; // Убедитесь, что ваш ключ рабочий
-const NEWS_API_KEY = 'a5bf1fd2e4dd4873b246d06e8d3b24e5';   // Убедитесь, что ваш ключ рабочий
+const OPEN_WEATHER_KEY = '4fe24b355df769a67639a42b8aff0485'; 
+const NEWS_API_KEY = 'a5bf1fd2e4dd4873b246d06e8d3b24e5';  
 const TRIVIA_API_URL = 'https://uselessfacts.jsph.pl/random.json?language=en';
 
-// Route: Weather
 app.get('/api/weather', async (req, res) => {
     const { city } = req.query;
     try {
@@ -24,7 +23,6 @@ app.get('/api/weather', async (req, res) => {
     }
 });
 
-// Route: News
 app.get('/api/news', async (req, res) => {
     const { city } = req.query;
     try {
@@ -35,14 +33,13 @@ app.get('/api/news', async (req, res) => {
             return res.status(404).json({ error: 'No news found for this city' });
         }
 
-        res.json(newsResponse.data.articles.slice(0, 5)); // Отправляем первые 5 новостей
+        res.json(newsResponse.data.articles.slice(0, 5)); 
     } catch (error) {
         console.error('News API Error:', error.message);
         res.status(500).json({ error: 'Failed to fetch news data' });
     }
 });
 
-// Route: Trivia
 app.get('/api/trivia', async (req, res) => {
     try {
         const triviaResponse = await axios.get(TRIVIA_API_URL);
