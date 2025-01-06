@@ -3,7 +3,6 @@ document.getElementById('get-weather').addEventListener('click', async () => {
     if (!city) return alert('Please enter a city.');
 
     try {
-        // Fetch weather data
         const weatherResponse = await fetch(`/api/weather?city=${city}`);
         if (!weatherResponse.ok) throw new Error('Failed to fetch weather data');
         const weatherData = await weatherResponse.json();
@@ -16,8 +15,6 @@ document.getElementById('get-weather').addEventListener('click', async () => {
             <p>Humidity: ${weatherData.main.humidity}%</p>
             <p>Wind Speed: ${weatherData.wind.speed} m/s</p>
         `;
-
-        // Fetch news data
         const newsResponse = await fetch(`/api/news?city=${city}`);
         if (newsResponse.status === 404) {
             document.getElementById('news-info').innerHTML = '<p>No news available for this city.</p>';
@@ -31,7 +28,6 @@ document.getElementById('get-weather').addEventListener('click', async () => {
             `;
         }
 
-        // Fetch trivia data
         const triviaResponse = await fetch('/api/trivia');
         if (!triviaResponse.ok) throw new Error('Failed to fetch trivia');
         const triviaData = await triviaResponse.json();
@@ -40,9 +36,7 @@ document.getElementById('get-weather').addEventListener('click', async () => {
             <h3>Trivia</h3>
             <p>${triviaData.text}</p>
         `;
-
-        // Initialize Google Map
-        const { lon, lat } = weatherData.coord; // Coordinates from weather data
+        const { lon, lat } = weatherData.coord;
         initMap(lat, lon, city);
 
     } catch (error) {
@@ -51,9 +45,8 @@ document.getElementById('get-weather').addEventListener('click', async () => {
     }
 });
 
-// Google Map initialization
 function initMap(lat, lon, city) {
-    document.getElementById('map').style.display = 'block'; // Show map container
+    document.getElementById('map').style.display = 'block'; 
 
     const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat, lng: lon },
